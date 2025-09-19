@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="calculator.css">
+  <title>Project 1 calculator</title>
+</head>
+<body>
+  <div id="calculator">
+    <input type="text" id="display" readonly>
+    <div class="button-container">
+      <!-- Memory row -->
+      <button class="button">MC</button>
+      <button class="button">MR</button>
+      <button class="button">M+</button>
+      <button class="button">M-</button>
+      <button class="button">MS</button>
+      <button class="button">Mv</button>
+      <!-- Second row -->
+      <button class="button">%</button>
+      <button class="button">CE</button>
+      <button class="button">C</button>
+      <button class="button">&#9003;</button>
+      <button class="button">÷</button>
+      <button class="button">×</button>
+      <!-- Third row -->
+      <button class="button">⅟x</button>
+      <button class="button">x²</button>
+      <button class="button">√x</button>
+      <button class="button">+</button>
+      <button class="button">-</button>
+      <button class="button">=</button>
+      <!-- Fourth row -->
+      <button class="button">7</button>
+      <button class="button">8</button>
+      <button class="button">9</button>
+      <button class="button" style="grid-row: span 2;">×</button>
+      <!-- Fifth row -->
+      <button class="button">4</button>
+      <button class="button">5</button>
+      <button class="button">6</button>
+      <button class="button" style="grid-row: span 2;">-</button>
+      <!-- Sixth row -->
+      <button class="button">1</button>
+      <button class="button">2</button>
+      <button class="button">3</button>
+      <button class="button" style="grid-row: span 2;">+</button>
+      <!-- Seventh row -->
+      <button class="button">+/-</button>
+      <button class="button">0</button>
+      <button class="button">.</button>
+      <button class="button" style="grid-row: span 2; background: #ff7f5a; color: #fff;">=</button>
+    </div>
+  </div>
+  <script>
+    let currentDisplay = '';
+    const display = document.getElementById('display');
+    const buttons = document.querySelectorAll('.button');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const value = button.textContent;
+
+        if (value === 'C') {
+          currentDisplay = '';
+        } else if (value === '=') {
+          try {
+            currentDisplay = eval(
+              currentDisplay.replace(/÷/g, '/').replace(/×/g, '*')
+            ).toString();
+          } catch {
+            currentDisplay = 'Error';
+          }
+        } else if (value === 'CE') {
+          currentDisplay = '';
+        } else if (value === '⌫' || value === '←' || value === '\u232b') {
+          currentDisplay = currentDisplay.slice(0, -1);
+        } else if (['MC','MR','M+','M-','MS','Mv','⅟x','x²','√x','+/-','%'].includes(value)) {
+          // Advanced functions can be implemented here
+        } else {
+          currentDisplay += value;
+        }
+        display.value = currentDisplay;
+      });
+    });
+
+    display.value = currentDisplay;
+  </script>
+</body>
+</html>
